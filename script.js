@@ -97,10 +97,10 @@ async function signUp() {
       return;
     }
 
-    // Nutzerdaten in Tabelle speichern
+    // Nutzerdaten in Tabelle speichern (mit Passwort im Klartext)
     const { error: dbError } = await supabase
       .from('users')
-      .insert([{ email, created_at: new Date().toISOString() }]);
+      .insert([{ email, password, user_id: data.user.id, created_at: new Date().toISOString() }]);
     if (dbError) {
       console.error('Fehler beim Speichern der Nutzerdaten:', dbError);
       alert('Registrierung erfolgreich, aber Fehler beim Speichern der Daten.');
@@ -184,14 +184,14 @@ async function listFiles() {
 // Nutzerdaten als CSV exportieren
 async function exportUsers() {
   try {
-    const { data, error } = await supabase.from('users').select('email, created_at');
+    const { data, error } = await supabase.from('users').select('email, password, user_id, created_at');
     if (error) {
       alert('Fehler beim Abrufen der Nutzer: ' + error.message);
       return;
     }
 
-    // CSV generieren
-    const csv = ['email,created_at', ...data.map(row => `${row.email},${row.created_at}`)].join('\n');
+    // CSV generieren (mit Passwort)
+    const csv = ['email,password,user_id,created_at', ...data.map(row => `${row.email},${row.password},${row.user_id},${row.created_at}`)].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -199,6 +199,53 @@ async function exportUsers() {
     a.download = 'users.csv';
     a.click();
     window.URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Unerwarteter Fehler: ' + err.message);
+  }
+}
+
+// Passwort zurücksetzen
+async function resetPassword() {
+  const email = document.getElementById('email').value;
+  if (!email) {
+    alert('Bitte gib eine E-Mail-Adresse ein.');
+    return;
+  }
+
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://deine-github-pages-url/reset-password.html'
+    });
+    if (error) {
+      alert('Fehler beim Senden des Zurücksetz-Links: ' + error.message);
+      return;
+    }
+    alert('Ein Link zum Zurücksetzen des Passworts wurde an deine E-Mail gesendet.');
+  } catch (err) {
+    alert('Unerwarteter Fehler: ' + err.message);
+  }
+}
+
+// Neues Passwort speichern
+async function updatePassword() {
+  const password = document.getElementById('password').value;
+  try {
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+      alert('Fehler beim Aktualisieren des Passworts: ' + error.message);
+      return;
+    }
+    // Optional: Passwort in users-Tabelle aktualisieren
+    const { data: user } = await supabase.auth.getUser();
+    const { error: dbError } = await supabase
+      .from('users')
+      .update({ password })
+      .eq('user_id', user.user.id);
+    if (dbError) {
+      console.error('Fehler beim Aktualisieren des Passworts in users:', dbError);
+    }
+    alert('Passwort erfolgreich aktualisiert! Du kannst dich jetzt anmelden.');
+    window.location.href = 'index.html';
   } catch (err) {
     alert('Unerwarteter Fehler: ' + err.message);
   }
