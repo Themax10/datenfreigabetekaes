@@ -6,7 +6,11 @@ let isSignUpMode = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Supabase initialisieren
-  supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  if (typeof supabase === 'undefined') {
+    console.error('Supabase-Bibliothek nicht geladen');
+    return;
+  }
+  supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   // Dashboard-Logik
   if (window.location.pathname.includes('dashboard.html')) {
@@ -50,6 +54,11 @@ async function signIn() {
     return;
   }
 
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    return;
+  }
+
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
@@ -90,6 +99,11 @@ async function signUp() {
     return;
   }
 
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    return;
+  }
+
   try {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) {
@@ -116,6 +130,11 @@ async function signUp() {
 
 // Abmeldung
 async function signOut() {
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    return;
+  }
+
   try {
     await supabase.auth.signOut();
     localStorage.removeItem('user');
@@ -131,6 +150,11 @@ async function uploadFile() {
   const file = fileInput.files[0];
   if (!file) {
     alert('Bitte wähle eine Datei aus.');
+    return;
+  }
+
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
     return;
   }
 
@@ -154,6 +178,11 @@ async function uploadFile() {
 
 // Dateien auflisten
 async function listFiles() {
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    return;
+  }
+
   const { data: user } = await supabase.auth.getUser();
   if (!user.user) {
     window.location.href = 'index.html';
@@ -183,6 +212,11 @@ async function listFiles() {
 
 // Nutzerdaten als CSV exportieren
 async function exportUsers() {
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    return;
+  }
+
   try {
     const { data, error } = await supabase.from('users').select('email, password, user_id, created_at');
     if (error) {
@@ -212,6 +246,11 @@ async function resetPassword() {
     return;
   }
 
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    return;
+  }
+
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: 'https://deine-github-pages-url/reset-password.html'
@@ -229,13 +268,18 @@ async function resetPassword() {
 // Neues Passwort speichern
 async function updatePassword() {
   const password = document.getElementById('password').value;
+  if (!supabase) {
+    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    return;
+  }
+
   try {
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
       alert('Fehler beim Aktualisieren des Passworts: ' + error.message);
       return;
     }
-    // Optional: Passwort in users-Tabelle aktualisieren
+    // Passwort in users-Tabelle aktualisieren
     const { data: user } = await supabase.auth.getUser();
     const { error: dbError } = await supabase
       .from('users')
