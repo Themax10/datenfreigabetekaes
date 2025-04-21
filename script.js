@@ -1,8 +1,19 @@
-// Supabase Initialisierung
 const SUPABASE_URL = 'https://pfztjmobxymxgefjznax.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmenRqbW9ieHlteGdlZmp6bmF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNDAzMDIsImV4cCI6MjA2MDgxNjMwMn0.cTcOArvqK0UeNinVpxQ2A_BcUFAy--BalHR7oKsWZXk';
-const { createClient } = Supabase; // Korrekt: Supabase.createClient zu createClient geändert
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Supabase-Client wird innerhalb des Event-Listeners initialisiert
+let supabase;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Supabase initialisieren
+  const { createClient } = Supabase;
+  supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Simulierte Anmeldung
+  if (window.location.pathname.includes('dashboard.html')) {
+    listFiles();
+  }
+});
 
 // Simulierte Anmeldung
 function simulateSignIn() {
@@ -97,10 +108,3 @@ async function listFiles() {
     alert('Unerwarteter Fehler: ' + err.message);
   }
 }
-
-// Auth-Status prüfen und Dateien laden
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.location.pathname.includes('dashboard.html')) {
-    listFiles();
-  }
-});
