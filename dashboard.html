@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dateifreigabe - Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <div class="wrapper">
@@ -22,6 +23,10 @@
         <div class="file-list-section">
           <h2>Freigegebene Dateien</h2>
           <ul id="fileList"></ul>
+        </div>
+        <div class="download-section">
+          <h2>PDF herunterladen</h2>
+          <a href="my_document.pdf" download>Download my_document.pdf</a>
         </div>
         <button class="signout-btn" onclick="signOut()">Abmelden</button>
       </div>
