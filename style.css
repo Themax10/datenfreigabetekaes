@@ -1,107 +1,167 @@
 body {
   margin: 0;
-  font-family: 'Roboto', Arial, sans-serif;
-  background-color: #e6ecef;
-  color: #00447c;
+  font-family: Arial, sans-serif;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
 }
-.header {
-  background-color: #00447c;
-  color: #faba00;
-  padding: 20px;
+.wrapper {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100vh;
 }
-.header .logo {
-  max-width: 120px;
-  height: auto;
-  margin-right: 20px;
-}
-.header h1 {
-  margin: 0;
-  font-size: 2em;
-  font-weight: 500;
-}
-.container {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.login-form {
+.left-section {
+  flex: 1;
+  background-color: #003087;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  max-width: 350px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.left-section .logo {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+.left-section h1 {
+  font-size: 2.5em;
+  font-weight: 500;
+  text-align: center;
+}
+.right-section {
+  flex: 1;
+  background-color: #1C2526;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+.login-form, .dashboard-content {
+  max-width: 400px;
   margin: 0 auto;
 }
-input {
-  padding: 12px;
-  font-size: 1em;
-  border: 1px solid #7296c8;
-  border-radius: 8px;
-  outline: none;
+.login-form h2, .dashboard-content h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: white;
 }
-input:focus {
-  border-color: #faba00;
-  box-shadow: 0 0 5px rgba(250, 186, 0, 0.3);
+.login-form label, .dashboard-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1em;
+}
+.login-form input, .dashboard-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #2A3435;
+  color: white;
+  font-size: 1em;
+}
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.form-options label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9em;
+}
+.form-options a.forgot-password {
+  color: #2196F3;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+.form-options a:hover {
+  text-decoration: underline;
 }
 button {
+  width: 100%;
   padding: 12px;
-  font-size: 1em;
-  background-color: #00447c;
-  color: #faba00;
+  background-color: #2196F3;
+  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
+  font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 button:hover {
-  background-color: #7296c8;
+  background-color: #1976D2;
 }
 .signout-btn {
-  background-color: #faba00;
-  color: #00447c;
+  background-color: #FFC107;
+  color: #1C2526;
+  margin-top: 20px;
 }
 .signout-btn:hover {
   background-color: #e6a800;
 }
-ul {
+.signup-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9em;
+}
+.signup-link a {
+  color: #2196F3;
+  text-decoration: none;
+}
+.signup-link a:hover {
+  text-decoration: underline;
+}
+.upload-section, .file-list-section {
+  margin-bottom: 30px;
+}
+.file-list-section ul {
   list-style: none;
   padding: 0;
 }
-li {
-  padding: 12px;
-  border-bottom: 1px solid #7296c8;
+.file-list-section li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
 }
-li a {
-  color: #00447c;
+.file-list-section li a {
+  color: #2196F3;
   text-decoration: none;
-  font-weight: 500;
 }
-li a:hover {
-  color: #faba00;
+.file-list-section li a:hover {
+  text-decoration: underline;
 }
-h2 {
-  color: #00447c;
-  font-size: 1.5em;
-  margin-bottom: 15px;
+.footer-links {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
-@media (max-width: 600px) {
-  .header .logo {
-    max-width: 80px;
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
   }
-  .header h1 {
-    font-size: 1.5em;
+  .left-section, .right-section {
+    flex: none;
+    height: 50vh;
+    justify-content: center;
   }
-  .container {
-    margin: 15px;
-    padding: 15px;
+  .left-section .logo {
+    max-width: 150px;
   }
-  .login-form {
-    max-width: 100%;
+  .left-section h1 {
+    font-size: 1.8em;
+  }
+  .footer-links {
+    position: static;
+    text-align: center;
+    margin-top: 20px;
   }
 }
