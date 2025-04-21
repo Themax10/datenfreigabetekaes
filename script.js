@@ -1,7 +1,8 @@
 // Supabase Initialisierung
 const SUPABASE_URL = 'https://pfztjmobxymxgefjznax.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmenRqbW9ieHlteGdlZmp6bmF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNDAzMDIsImV4cCI6MjA2MDgxNjMwMn0.cTcOArvqK0UeNinVpxQ2A_BcUFAy--BalHR7oKsWZXk';
-const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const { createClient } = Supabase; // Korrekt: Supabase.createClient zu createClient geändert
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Simulierte Anmeldung
 function simulateSignIn() {
@@ -47,11 +48,14 @@ async function uploadFile() {
   try {
     const { data, error } = await supabase.storage
       .from('uploads')
-      .upload(`${Date.now()}_${file.name}`, file);
+      .upload(`${Date.now()}_${file.name}`, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
     
     if (error) {
       console.error('Upload-Fehler:', error);
-      alert('Fehler beim Hochladen der Datei: ' + error.message);
+      alert('Fehler beim Hochladen der Datei: ' + JSON.stringify(error));
       return;
     }
 
@@ -59,7 +63,7 @@ async function uploadFile() {
     listFiles();
   } catch (err) {
     console.error('Unerwarteter Fehler:', err);
-    alert('Ein unerwarteter Fehler ist aufgetreten.');
+    alert('Unerwarteter Fehler: ' + err.message);
   }
 }
 
@@ -78,7 +82,7 @@ async function listFiles() {
     const { data, error } = await supabase.storage.from('uploads').list();
     if (error) {
       console.error('Fehler beim Abrufen der Dateien:', error);
-      alert('Fehler beim Abrufen der Dateien: ' + error.message);
+      alert('Fehler beim Abrufen der Dateien: ' + JSON.stringify(error));
       return;
     }
 
@@ -90,7 +94,7 @@ async function listFiles() {
     });
   } catch (err) {
     console.error('Unerwarteter Fehler:', err);
-    alert('Ein unerwarteter Fehler ist aufgetreten.');
+    alert('Unerwarteter Fehler: ' + err.message);
   }
 }
 
