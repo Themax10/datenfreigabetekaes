@@ -3,70 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meine Webseite mit Logos</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-    }
-    .header {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 2em;
-    }
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 20px;
-      background-color: #333; /* Dunkler Hintergrund für weißes Logo */
-    }
-    .logo {
-      max-width: 200px;
-      width: 100%;
-      height: auto;
-      margin: 10px;
-    }
-    @media (max-width: 600px) {
-      .logo {
-        max-width: 150px; /* Kleinere Größe für Mobilgeräte */
-      }
-    }
-    .content {
-      text-align: center;
-      padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .content p {
-      font-size: 1.2em;
-      line-height: 1.5;
-    }
-    /* Unterstützung für hellen/dunklen Modus */
-    @media (prefers-color-scheme: light) {
-      .logo-container {
-        background-color: #fff; /* Heller Hintergrund für farbiges Logo */
-      }
-    }
-  </style>
+  <title>Dateifreigabe - Anmeldung</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="header">
-    <h1>Meine Logo-Webseite</h1>
-  </div>
-  <div class="logo-container">
+  <header class="header">
     <img src="logo_white.118ffce4.svg" alt="Weißes Logo" class="logo">
-    <img src="logo.a0b67669.svg" alt="Farbige Logo" class="logo">
-  </div>
-  <div class="content">
-    <p>Willkommen auf meiner Webseite! Hier präsentiere ich zwei coole Logos, die ich integriert habe.</p>
-    <p>Die Webseite ist responsiv und funktioniert auf allen Geräten. Probier es aus!</p>
-  </div>
+    <h1>Dateifreigabe-Webseite</h1>
+  </header>
+  <main class="container">
+    <section class="login-form">
+      <h2>Anmelden</h2>
+      <input type="email" id="email" placeholder="E-Mail" required>
+      <input type="password" id="password" placeholder="Passwort" required>
+      <button onclick="signIn()">Anmelden</button>
+      <p>Noch kein Konto? <a href="#" onclick="signUp()">Registrieren</a></p>
+    </section>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
