@@ -7,25 +7,29 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="header">
-    <img src="logo.a0b67669.svg" alt="Farbige Logo" class="logo">
-    <h1>Dateifreigabe-Dashboard</h1>
-    <button class="signout-btn" onclick="signOut()">Abmelden</button>
-  </header>
-  <main class="container">
-    <section>
-      <h2>Datei hochladen</h2>
-      <input type="file" id="fileInput">
-      <button onclick="uploadFile()">Hochladen</button>
-    </section>
-    <section>
-      <h2>Freigegebene Dateien</h2>
-      <ul id="fileList"></ul>
-    </section>
-  </main>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+  <div class="wrapper">
+    <div class="left-section">
+      <img src="logo.a0b67669.svg" alt="Farbige Logo" class="logo">
+      <h1>Dateifreigabe-Dashboard</h1>
+    </div>
+    <div class="right-section">
+      <div class="dashboard-content">
+        <div class="upload-section">
+          <h2>Datei hochladen</h2>
+          <input type="file" id="fileInput">
+          <button onclick="uploadFile()">Hochladen</button>
+        </div>
+        <div class="file-list-section">
+          <h2>Freigegebene Dateien</h2>
+          <ul id="fileList"></ul>
+        </div>
+        <button class="signout-btn" onclick="signOut()">Abmelden</button>
+      </div>
+      <footer class="footer-links">
+        <a href="#">Dateifreigabe-Webseite</a>
+      </footer>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
