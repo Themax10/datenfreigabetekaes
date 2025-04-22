@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (err) {
     console.error('Fehler bei der Initialisierung des Supabase-Clients:', err);
     alert('Fehler bei der Supabase-Initialisierung: ' + err.message);
+    return;
+  }
+
+  // Füge Event-Listener für den Button hinzu
+  const signInButton = document.getElementById('signInButton');
+  if (signInButton) {
+    signInButton.addEventListener('click', signIn);
+  } else {
+    console.error('SignIn-Button nicht gefunden. Stelle sicher, dass das Element mit id="signInButton" existiert.');
   }
 });
 
