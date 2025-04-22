@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dateifreigabe - Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <div class="wrapper">
@@ -15,24 +14,10 @@
     </div>
     <div class="right-section">
       <div class="dashboard-content">
-        <div class="upload-section">
-          <h2>Datei hochladen</h2>
-          <input type="file" id="fileInput">
-          <button onclick="uploadFile()">Hochladen</button>
-        </div>
-        <div class="file-list-section">
-          <h2>Freigegebene Dateien</h2>
-          <ul id="fileList"></ul>
-        </div>
         <div class="download-section">
           <h2>PDF herunterladen</h2>
           <a href="my_document.pdf" download>Download my_document.pdf</a>
         </div>
-        <div class="export-section">
-          <h2>Nutzerdaten exportieren</h2>
-          <button onclick="exportUsers()">Nutzer als CSV exportieren</button>
-        </div>
-        <button class="signout-btn" onclick="signOut()">Abmelden</button>
       </div>
       <footer class="footer-links">
         <a href="#">Dateifreigabe-Webseite</a>
@@ -40,6 +25,5 @@
       </footer>
     </div>
   </div>
-  <script src="script.js"></script>
 </body>
 </html>
