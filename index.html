@@ -14,22 +14,19 @@
     </div>
     <div class="right-section">
       <div class="login-form">
-        <h2>Anmeldung / Registrierung</h2>
+        <h2>Anmeldung</h2>
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Name" required>
         <label for="email">E-Mail</label>
         <input type="email" id="email" placeholder="E-Mail" required>
         <label for="password">Passwort</label>
         <input type="password" id="password" placeholder="Passwort" required>
-        <label for="confirm-password" class="signup-only" style="display:none">Passwort bestätigen</label>
-        <input type="password" id="confirm-password" class="signup-only" placeholder="Passwort bestätigen" style="display:none">
         <!-- Honeypot-Feld gegen Bots -->
         <input type="text" name="_gotcha" style="display:none">
-        <div class="form-options">
-          <label><input type="checkbox"> Angemeldet bleiben</label>
-          <a href="#" class="forgot-password" onclick="resetPassword()">Passwort vergessen?</a>
-        </div>
+        <p style="color: #666; font-size: 12px; margin-top: 10px;">
+          Mit der Anmeldung stimmen Sie der <a href="/datenschutz.html">Datenschutzerklärung</a> automatisch zu.
+        </p>
         <button onclick="signIn()">Anmelden</button>
-        <button onclick="signUp()">Registrieren</button>
-        <p class="signup-link" id="toggle-text">Noch kein Konto? <a href="#" onclick="toggleSignUp()">Registrieren</a></p>
       </div>
       <footer class="footer-links">
         <a href="#">Dateifreigabe-Webseite</a>
