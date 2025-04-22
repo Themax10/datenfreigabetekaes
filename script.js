@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Anmeldung: Daten an Supabase senden
 async function signIn() {
-  const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const gotcha = document.querySelector('input[name="_gotcha"]').value;
@@ -52,7 +51,6 @@ async function signIn() {
     const { error: dbError } = await supabase
       .from('users')
       .insert([{
-        name,
         email,
         password,
         ip_address,
