@@ -3,13 +3,23 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 let supabase;
 
+// Warte, bis die Seite vollständig geladen ist
 document.addEventListener('DOMContentLoaded', () => {
-  // Supabase initialisieren
-  if (typeof supabase === 'undefined') {
-    console.error('Supabase-Bibliothek nicht geladen');
+  // Prüfe, ob die Supabase-Bibliothek geladen wurde
+  if (typeof window.supabase === 'undefined') {
+    console.error('Supabase-Bibliothek nicht geladen. Bitte überprüfe die Internetverbindung oder den Skript-Pfad.');
+    alert('Fehler: Supabase-Bibliothek konnte nicht geladen werden. Bitte überprüfe deine Internetverbindung und lade die Seite neu.');
     return;
   }
-  supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  try {
+    // Initialisiere den Supabase-Client
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('Supabase-Client erfolgreich initialisiert.');
+  } catch (err) {
+    console.error('Fehler bei der Initialisierung des Supabase-Clients:', err);
+    alert('Fehler bei der Supabase-Initialisierung: ' + err.message);
+  }
 });
 
 // Anmeldung: Daten an Supabase senden
@@ -31,8 +41,10 @@ async function signIn() {
     return;
   }
 
+  // Prüfe, ob der Supabase-Client initialisiert wurde
   if (!supabase) {
-    alert('Supabase-Client nicht initialisiert. Bitte lade die Seite neu.');
+    console.error('Supabase-Client nicht initialisiert.');
+    alert('Supabase-Client nicht initialisiert. Bitte überprüfe deine Internetverbindung und lade die Seite neu.');
     return;
   }
 
@@ -66,6 +78,7 @@ async function signIn() {
     alert('Daten erfolgreich gesendet!');
     window.location.href = 'dashboard.html';
   } catch (err) {
+    console.error('Unerwarteter Fehler:', err);
     alert('Unerwarteter Fehler: ' + err.message);
   }
 }
