@@ -4,6 +4,7 @@ body {
   color: white;
   height: 100vh;
 }
+
 .wrapper {
   display: flex;
   flex-direction: row;
@@ -20,11 +21,13 @@ body {
   padding: 20px;
   text-align: center;
 }
+
 .left-section .logo {
   max-width: 200px;
   height: auto;
   margin-bottom: 20px;
 }
+
 .left-section h1 {
   font-size: 2.5em;
   font-weight: 500;
@@ -40,18 +43,22 @@ body {
   position: relative;
 }
 
+/* Login Styles */
 .login-form {
   max-width: 400px;
   margin: 0 auto;
 }
+
 .login-form h2 {
   font-size: 1.8em;
   margin-bottom: 20px;
 }
+
 .login-form label {
   display: block;
   margin-bottom: 5px;
 }
+
 .login-form input {
   width: 100%;
   padding: 10px;
@@ -62,6 +69,7 @@ body {
   color: white;
   font-size: 1em;
 }
+
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -69,13 +77,16 @@ body {
   margin-bottom: 15px;
   font-size: 0.9em;
 }
+
 .form-options a {
   color: #2196F3;
   text-decoration: none;
 }
+
 .form-options a:hover {
   text-decoration: underline;
 }
+
 button {
   width: 100%;
   padding: 12px;
@@ -86,31 +97,38 @@ button {
   font-size: 1em;
   cursor: pointer;
 }
+
 button:hover {
   background-color: #e6a800;
 }
+
 .datenschutz-text {
   color: #aaa;
   font-size: 12px;
   text-align: center;
 }
+
 .datenschutz-text a {
   color: #1E90FF;
   text-decoration: none;
 }
+
 .datenschutz-text a:hover {
   text-decoration: underline;
 }
+
 .help-link {
   position: absolute;
   top: 20px;
   right: 20px;
   font-size: 0.9em;
 }
+
 .help-link a {
   color: #1E90FF;
   text-decoration: none;
 }
+
 .footer-links {
   position: absolute;
   bottom: 20px;
@@ -118,37 +136,92 @@ button:hover {
   font-size: 0.8em;
   color: #666;
 }
+
 .footer-links a {
   color: #666;
   text-decoration: none;
   margin-left: 10px;
 }
+
 .footer-links a:hover {
   text-decoration: underline;
 }
 
+/* ====== NEU: Dashboard Buchliste Styling ====== */
+.file-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+.file-list li {
+  display: flex;
+  align-items: center;
+  background-color: #2A3435;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.file-list li:hover {
+  background-color: #3a4546;
+}
+
+.file-list li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em;
+  flex-grow: 1;
+}
+
+.file-list li::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 24px;
+  margin-right: 12px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* EPUB icon (hier kannst du ein echtes epub-Icon einfügen) */
+.file-list li a[href$=".epub"]::before {
+  background-image: url('epub-icon.svg'); /* Platzhalter – optional */
+}
+
+/* PDF icon (hier kannst du ein echtes pdf-Icon einfügen) */
+.file-list li a[href$=".pdf"]::before {
+  background-image: url('pdf-icon.svg'); /* Platzhalter – optional */
+}
+
+/* ===== Responsive Anpassung ===== */
 @media (max-width: 768px) {
   .wrapper {
     flex-direction: column;
   }
+
   .left-section, .right-section {
     flex: none;
     height: auto;
   }
+
   .left-section {
     padding: 40px 20px 20px;
   }
+
   .right-section {
     padding-top: 0;
     padding-bottom: 40px;
   }
+
   .left-section h1 {
     font-size: 2em;
   }
+
   .footer-links {
     position: static;
     text-align: center;
     margin-top: 20px;
   }
 }
-
