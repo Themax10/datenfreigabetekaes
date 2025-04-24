@@ -3,12 +3,13 @@ body {
   font-family: Arial, sans-serif;
   color: white;
   height: 100vh;
-  overflow: hidden;
 }
 .wrapper {
   display: flex;
+  flex-direction: row;
   height: 100vh;
 }
+
 .left-section {
   flex: 1;
   background-color: #003087;
@@ -17,6 +18,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  text-align: center;
 }
 .left-section .logo {
   max-width: 200px;
@@ -26,8 +28,8 @@ body {
 .left-section h1 {
   font-size: 2.5em;
   font-weight: 500;
-  text-align: center;
 }
+
 .right-section {
   flex: 1;
   background-color: #1C2526;
@@ -35,26 +37,26 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+  position: relative;
 }
-.login-form, .dashboard-content {
+
+.login-form {
   max-width: 400px;
   margin: 0 auto;
 }
-.login-form h2, .dashboard-content h2 {
+.login-form h2 {
   font-size: 1.8em;
   margin-bottom: 20px;
-  color: white;
 }
-.login-form label, .dashboard-content label {
+.login-form label {
   display: block;
   margin-bottom: 5px;
-  font-size: 1em;
 }
-.login-form input, .dashboard-content input {
+.login-form input {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #444;
   border-radius: 4px;
   background-color: #2A3435;
   color: white;
@@ -65,17 +67,11 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-}
-.form-options label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
   font-size: 0.9em;
 }
-.form-options a.forgot-password {
+.form-options a {
   color: #2196F3;
   text-decoration: none;
-  font-size: 0.9em;
 }
 .form-options a:hover {
   text-decoration: underline;
@@ -83,81 +79,71 @@ body {
 button {
   width: 100%;
   padding: 12px;
-  background-color: #2196F3;
-  color: white;
+  background-color: #FFC107;
+  color: #1C2526;
   border: none;
   border-radius: 4px;
   font-size: 1em;
   cursor: pointer;
 }
 button:hover {
-  background-color: #1976D2;
-}
-.signout-btn {
-  background-color: #FFC107;
-  color: #1C2526;
-  margin-top: 20px;
-}
-.signout-btn:hover {
   background-color: #e6a800;
 }
-.signup-link {
-  margin-top: 15px;
+.datenschutz-text {
+  color: #aaa;
+  font-size: 12px;
   text-align: center;
+}
+.datenschutz-text a {
+  color: #1E90FF;
+  text-decoration: none;
+}
+.datenschutz-text a:hover {
+  text-decoration: underline;
+}
+.help-link {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   font-size: 0.9em;
 }
-.signup-link a {
-  color: #2196F3;
+.help-link a {
+  color: #1E90FF;
   text-decoration: none;
-}
-.signup-link a:hover {
-  text-decoration: underline;
-}
-.upload-section, .file-list-section {
-  margin-bottom: 30px;
-}
-.file-list-section ul {
-  list-style: none;
-  padding: 0;
-}
-.file-list-section li {
-  padding: 10px 0;
-  border-bottom: 1px solid #ccc;
-}
-.file-list-section li a {
-  color: #2196F3;
-  text-decoration: none;
-}
-.file-list-section li a:hover {
-  text-decoration: underline;
 }
 .footer-links {
   position: absolute;
   bottom: 20px;
   right: 20px;
+  font-size: 0.8em;
+  color: #666;
 }
 .footer-links a {
-  color: #ccc;
+  color: #666;
   text-decoration: none;
-  font-size: 0.9em;
+  margin-left: 10px;
 }
 .footer-links a:hover {
   text-decoration: underline;
 }
+
 @media (max-width: 768px) {
   .wrapper {
     flex-direction: column;
   }
   .left-section, .right-section {
     flex: none;
-    height: 50vh;
-    justify-content: center;
+    height: auto;
   }
-  .left-section .logo {
-    max-width: 150px;
+  .left-section {
+    padding: 40px 20px 20px;
+  }
+  .right-section {
+    padding-top: 0;
+    padding-bottom: 40px;
   }
   .left-section h1 {
-    font-size: 1.8em;
+    font-size: 2em;
   }
   .footer-links {
     position: static;
@@ -165,3 +151,4 @@ button:hover {
     margin-top: 20px;
   }
 }
+
