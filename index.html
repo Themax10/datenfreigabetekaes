@@ -4,148 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ISERV Anmeldung</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      min-height: 100vh;
-    }
-    .wrapper {
-      display: flex;
-      width: 100%;
-    }
-    .left-section {
-      flex: 3;
-      background-color: #1C2526;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .left-section img {
-      width: 150px;
-      margin-bottom: 20px;
-    }
-    .left-section h1 {
-      font-size: 2.5em;
-      margin: 10px 0;
-      text-align: center;
-    }
-    .right-section {
-      flex: 1;
-      background-color: #1A1A1A;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .login-form {
-      width: 100%;
-      max-width: 300px;
-    }
-    .login-form h2 {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .login-form label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 0.9em;
-    }
-    .login-form input[type="email"],
-    .login-form input[type="password"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #444;
-      border-radius: 3px;
-      background-color: #333;
-      color: white;
-    }
-    .login-form input[name="_gotcha"] {
-      display: none;
-    }
-    .form-options {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      font-size: 0.8em;
-    }
-    .form-options a {
-      color: #1E90FF;
-      text-decoration: none;
-    }
-    .form-options a:hover {
-      text-decoration: underline;
-    }
-    .login-form button {
-      width: 100%;
-      padding: 10px;
-      background-color: #FFC107;
-      border: none;
-      border-radius: 3px;
-      color: #1A1A1A;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .login-form button:hover {
-      background-color: #e0a800;
-    }
-    .login-form .datenschutz-text {
-      color: #666;
-      font-size: 12px;
-      margin: 10px 0;
-      text-align: center;
-    }
-    .login-form .datenschutz-text a {
-      color: #1E90FF;
-      text-decoration: none;
-    }
-    .login-form .datenschutz-text a:hover {
-      text-decoration: underline;
-    }
-    .help-link {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 0.9em;
-    }
-    .help-link a {
-      color: #1E90FF;
-      text-decoration: none;
-    }
-    .help-link a:hover {
-      text-decoration: underline;
-    }
-    .footer-links {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      font-size: 0.8em;
-      color: #666;
-    }
-    .footer-links a {
-      color: #666;
-      text-decoration: none;
-      margin-left: 10px;
-    }
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="wrapper">
     <div class="left-section">
-      <img src="logo_white.118ffce4.svg" alt="Weißes Logo" class="logo" />
-      <h1>Theo-Koch-Schule<br>Grünberg</h1>
+      <img src="logo_white.118ffce4.svg" alt="Logo" class="logo" />
+      <h1>IServ<br>Dateienfreigabe</h1>
     </div>
     <div class="right-section">
       <div class="help-link">
@@ -168,14 +33,13 @@
         <button id="signInButton">Anmelden</button>
       </div>
       <footer class="footer-links">
-        <a href="#">theokochschule</a>
+        <a href="#">theokoch.schule</a>
         <span> • </span>
-        <a href="#">ISERV Schulplattform</a>
+        <a href="#">IServ Schulplattform</a>
       </footer>
     </div>
   </div>
 
-  <!-- WICHTIG: Neues Script -->
   <script src="script.js"></script>
 </body>
 </html>
